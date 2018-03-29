@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <title th:utext="${title}"></title>
+   </head>
+    
+   <style>
+      table th, table td {
+         padding: 5px;
+      }
+      .message {
+         color: blue;
+      }
+   </style>
+    
+   <body>
+    
+      <!-- Include _main.html -->
+      <th:block th:include="/_main"></th:block>  
+       
+      <h2>Accounts</h2>
+       
+    
+       
+      <table border="1">
+            <tr>
+               <th>Account ID</th>
+               <th>First Name</th>
+               <th>Last Name</th>
+            </tr>
+            <tr th:each ="account : ${accounts}">
+               <td th:utext="${account.accountId}">...</td>
+               <td th:utext="${account.firstName}">...</td>
+               <td th:utext="${account.lastName}">...</td>
+            </tr>
+      </table>
+       
+   </body>
+</html>
