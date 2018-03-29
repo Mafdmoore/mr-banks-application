@@ -18,15 +18,15 @@
       </style>
    </head>
    <body>
-      <!-- Include _menu.html -->
-      <th:block th:include="/_menu"></th:block>
+      <!-- Include _main.html -->
+      <th:block th:include="/_main"></th:block>
        
       <h2>Create Account</h2>
        
       <div th:if="${errorMessage != null}"
            th:utext="${errorMessage}" class="error">...</div>
        
-      <form th:action="@{/register}" th:object="${accountForm}" method="POST">
+      <form th:action="@{/createAccount}" th:object="${accountForm}" method="POST">
          <table>
             <tr>
                <td>Account ID</td>

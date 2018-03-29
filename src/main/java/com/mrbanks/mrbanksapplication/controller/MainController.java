@@ -26,7 +26,7 @@ public class MainController
    private AccountDAO accountDAO;
  
    @Autowired
-   private AccountValidator appUserValidator;
+   private AccountValidator accountValidator;
  
    @InitBinder
    protected void initBinder(WebDataBinder dataBinder)
@@ -35,7 +35,7 @@ public class MainController
       if (target == null) return;
       System.out.println("Target=" + target);
  
-      if (target.getClass() == AccountForm.class) dataBinder.setValidator(appUserValidator);
+      if (target.getClass() == AccountForm.class) dataBinder.setValidator(accountValidator);
    }
  
    @RequestMapping("/")
@@ -44,34 +44,34 @@ public class MainController
       return "welcomePage";
    }
  
-   @RequestMapping("/members")
+   @RequestMapping("/accounts")
    public String viewMembers(Model model)
    {
       List<Account> list = accountDAO.getAccounts();
  
       model.addAttribute("members", list);
  
-      return "membersPage";
+      return "accountsPage";
    }
  
-   @RequestMapping("/registerSuccessful")
+   @RequestMapping("/createAccountSuccessful")
    public String viewRegisterSuccessful(Model model)
    {
-      return "registerSuccessfulPage";
+      return "createAccountSuccessfulPage";
    }
  
-   @RequestMapping(value = "/register", method = RequestMethod.GET)
+   @RequestMapping(value = "/createAccount", method = RequestMethod.GET)
    public String viewRegister(Model model) {
  
 	  AccountForm form = new AccountForm();
  
       model.addAttribute("accountForm", form);
  
-      return "registerPage";
+      return "createAccountPage";
    }
  
-   @RequestMapping(value = "/register", method = RequestMethod.POST)
-   public String saveRegister(Model model, @ModelAttribute("appUserForm") @Validated AccountForm accountForm, BindingResult result, final RedirectAttributes redirectAttributes)
+   @RequestMapping(value = "/createAccount", method = RequestMethod.POST)
+   public String saveRegister(Model model, @ModelAttribute("accountForm") @Validated AccountForm accountForm, BindingResult result, final RedirectAttributes redirectAttributes)
    {
 	  Account newUser= null;
       try
@@ -81,12 +81,12 @@ public class MainController
       catch (Exception e)
       {
          model.addAttribute("errorMessage", "Error: " + e.getMessage());
-         return "registerPage";
+         return "createAccountPage";
       }
  
       redirectAttributes.addFlashAttribute("flashUser", newUser);
        
-      return "redirect:/registerSuccessful";
+      return "redirect:/createAccountSuccessful";
    }
  
 }
