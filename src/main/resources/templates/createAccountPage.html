@@ -33,13 +33,6 @@
       <form th:action="@{/createAccount}" th:object="${accountForm}" method="POST">
          <table>
             <tr>
-               <td>Account ID</td>
-               <td><input type="text" th:field="*{accountId}" /></td>
-               <td>
-                  <span th:if="${#fields.hasErrors('accountId')}" th:errors="*{accountId}">..</span>
-               </td>
-            </tr>
-            <tr>
                <td>First Name</td>
                <td><input type="text" th:field="*{firstName}" /> </td>
                <td>

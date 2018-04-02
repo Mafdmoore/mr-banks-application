@@ -36,6 +36,8 @@ public class AccountDAO
         {
             if (id > max) max = id;
         }
+        
+        
         return max;
     }
  
@@ -46,24 +48,27 @@ public class AccountDAO
         {
             if (u.getAccountId().equals(accountId)) return u;
         }
+        
+        
         return null;
     }
  
     public List<Account> getAccounts()
     {
         List<Account> list = new ArrayList<>();
- 
         list.addAll(ACCOUNTS_MAP.values());
+        
+        
         return list;
     }
  
     public Account createAccount(AccountForm form)
     {
     	Long accountId = this.getMaxAccountId() + 1;
- 
         Account account = new Account(accountId, form.getFirstName(), form.getLastName());
- 
         ACCOUNTS_MAP.put(accountId, account);
+        
+        
         return account;
     }
  
@@ -75,8 +80,9 @@ public class AccountDAO
     public Account editAccount(Long accountId, AccountForm form)
     {
     	Account account = new Account(accountId, form.getFirstName(), form.getLastName());
-    	
     	ACCOUNTS_MAP.replace(accountId, account);
+    	
+    	
     	return account;
     }
 }

@@ -30,12 +30,13 @@
                <th>Delete</th>
             </tr>
             <tr th:each ="account : ${accounts}">
-               <form th:action="@{/editAccount}" th:object="${accountForm}" method="POST">
-               	  <td input type="text" name="accountId" th:value="${account.accountId}" th:utext="${account.accountId}" /></td>
-           		  <td input type="text" th:utext="${account.firstName}" /></td>
-               	  <td input type="text" th:utext="${account.lastName}" /></td>
-               	  <td><input type="submit" value="Edit" /</td>
-               	  <td><input type="submit" value="Delete" th:formaction="@{/accounts}" /></td>
+           	   <td th:utext="${account.accountId}" /></td>
+       		   <td th:utext="${account.firstName}" /></td>
+           	   <td th:utext="${account.lastName}" /></td>
+           	   <form th:action="@{/editAccount}" method="POST">
+           	   	  <input type="hidden" name="id" th:value="${account.accountId}"></input>
+           	   	  <td><input type="submit" value="Edit" /></td>
+       	   		  <td><input type="submit" value="Delete" th:formaction="@{/accounts}" /></td>
                </form>
             </tr>
       </table>

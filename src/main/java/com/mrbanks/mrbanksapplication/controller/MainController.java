@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.mrbanks.mrbanksapplication.dao.AccountDAO;
 import com.mrbanks.mrbanksapplication.dao.AccountForm;
@@ -50,9 +51,9 @@ public class MainController
 	public String viewMembers(Model model)
 	{
 		List<Account> list = accountDAO.getAccounts();
-
 		model.addAttribute("accounts", list);
 
+		
 		return "accountsPage";
 	}
 
@@ -74,26 +75,35 @@ public class MainController
 	public String viewRegister(Model model)
 	{
 		AccountForm form = new AccountForm();
-
 		model.addAttribute("accountForm", form);
 
+		
 		return "createAccountPage";
 	}
 
 	//User visits editAccountPage
 	@RequestMapping(value = "/editAccount", method = RequestMethod.POST)
-	public String viewRegisterElement(Model model, @ModelAttribute("accountForm") AccountForm accountForm, BindingResult result)
+	public String viewRegisterElement(Model model, @RequestParam(name = "id") Long accountId)
 	{
-		//Account account = accountDAO.findAccountByAccountId(accountId);
-		System.out.println(accountForm.getAccountId() + "\n" + accountForm.getFirstName() + "\n" + accountForm.getLastName());
-		
-		//AccountForm form = new AccountForm(account.getAccountId(), account.getFirstName(), account.getLastName());
-		//If the program tries to display a form that isn't a new AccountForm object, it returns a whitelabel error
-		//This is probably because the HTML page doesn't send an account ID when the Edit button is clicked, so the Java code is using an uninitialised Long to find an Account object
-		
-		model.addAttribute("accountForm", accountForm);
+		Account account = accountDAO.findAccountByAccountId(accountId);
+		AccountForm form = new AccountForm(account.getAccountId(), account.getFirstName(), account.getLastName());
+		model.addAttribute("accountForm", form);
 
+		
 		return "editAccountPage";
+	}
+	
+	//User clicks Delete on accountsPage
+	@RequestMapping(value = "/accounts", method = RequestMethod.POST)
+	public String deleteRegisterElement(Model model, @RequestParam(name = "id") Long accountId)
+	{
+		accountDAO.deleteAccount(accountId);
+		
+		List<Account> list = accountDAO.getAccounts();
+		model.addAttribute("accounts", list);
+		
+		
+		return "accountsPage";
 	}
 
 	//User clicks Submit on createAccountPage
@@ -113,15 +123,15 @@ public class MainController
 
 		redirectAttributes.addFlashAttribute("flashUser", newAccount);
 
+		
 		return "redirect:/createAccountSuccessful";
 	}
 
 	//User clicks Submit on editAccountPage
 	@RequestMapping(value = "/editAccountSubmit", method = RequestMethod.POST)
-	public String editRegisterElement(Model model, @ModelAttribute("accountForm") @Validated AccountForm accountForm, BindingResult result, final RedirectAttributes redirectAttributes)
+	public String editRegisterElement(Model model, @ModelAttribute("accountForm") @Validated AccountForm accountForm, @RequestParam(name = "id") Long accountId, BindingResult result, final RedirectAttributes redirectAttributes)
 	{
 		Account newAccount = null;
-		Long accountId = accountForm.getAccountId();
 		try
 		{
 			newAccount = accountDAO.editAccount(accountId, accountForm);
@@ -134,6 +144,7 @@ public class MainController
 
 		redirectAttributes.addFlashAttribute("flashUser", newAccount);
 
+		
 		return "redirect:/editAccountSuccessful";
 	}
 }
