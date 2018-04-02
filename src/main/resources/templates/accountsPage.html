@@ -5,10 +5,12 @@
    </head>
     
    <style>
-      table th, table td {
+      table th, table td
+      {
          padding: 5px;
       }
-      .message {
+      .message
+      {
          color: blue;
       }
    </style>
@@ -27,11 +29,15 @@
                <th>Account ID</th>
                <th>First Name</th>
                <th>Last Name</th>
+               <th>Edit</th>
+               <th>Delete</th>
             </tr>
             <tr th:each ="account : ${accounts}">
-               <td th:utext="${account.accountId}">...</td>
+               <td input type="text" th:utext="${account.accountId}" readonly form="editform" "deleteform"/></td>
                <td th:utext="${account.firstName}">...</td>
                <td th:utext="${account.lastName}">...</td>
+               <td><form action="http://localhost:8080/editAccount" id="editform"><button type="submit" value="Edit">Edit</button></form></td>
+               <td><form action="http://localhost:8080/accounts" id="deleteform"><button type="submit" value="Delete">Delete</button></form></td>
             </tr>
       </table>
        

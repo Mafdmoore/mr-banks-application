@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <title>Successfully edited</title>
+      <style>
+        span {color: blue;}
+      </style>
+   </head>
+    
+   <body>
+    
+      <!-- Include _main.html -->
+      <th:block th:include="/_main"></th:block>  
+       
+      <h2>Account successfully edited</h2>
+       
+      <div th:if="${flashUser != null}">
+         <ul>
+            <li>Account ID: <span th:utext="${flashUser.accountId}">..</span></li>
+            <li>First Name: <span th:utext="${flashUser.firstName}">..</span></li>
+            <li>Last Name: <span th:utext="${flashUser.lastName}">..</span></li>
+         </ul>
+      </div>
+      
+       
+   </body>
+</html>
