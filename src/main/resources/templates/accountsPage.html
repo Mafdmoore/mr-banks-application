@@ -3,7 +3,7 @@
    <head>
       <title th:utext="${title}"></title>
    </head>
-    
+   
    <style>
       table th, table td
       {
@@ -16,14 +16,11 @@
    </style>
     
    <body>
-    
       <!-- Include _main.html -->
       <th:block th:include="/_main"></th:block>  
        
       <h2>Accounts</h2>
-       
-    
-       
+      
       <table border="1">
             <tr>
                <th>Account ID</th>
@@ -33,13 +30,14 @@
                <th>Delete</th>
             </tr>
             <tr th:each ="account : ${accounts}">
-               <td input type="text" th:utext="${account.accountId}" readonly form="editform" "deleteform"/></td>
-               <td th:utext="${account.firstName}">...</td>
-               <td th:utext="${account.lastName}">...</td>
-               <td><form action="http://localhost:8080/editAccount" id="editform"><button type="submit" value="Edit">Edit</button></form></td>
-               <td><form action="http://localhost:8080/accounts" id="deleteform"><button type="submit" value="Delete">Delete</button></form></td>
+               <form th:action="@{/editAccount}" th:object="${accountForm}" method="POST">
+               	  <td input type="text" name="accountId" th:value="${account.accountId}" th:utext="${account.accountId}" /></td>
+           		  <td input type="text" th:utext="${account.firstName}" /></td>
+               	  <td input type="text" th:utext="${account.lastName}" /></td>
+               	  <td><input type="submit" value="Edit" /</td>
+               	  <td><input type="submit" value="Delete" th:formaction="@{/accounts}" /></td>
+               </form>
             </tr>
       </table>
-       
    </body>
 </html>

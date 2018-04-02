@@ -81,18 +81,17 @@ public class MainController
 	}
 
 	//User visits editAccountPage
-	@RequestMapping(value = "/editAccount", method = RequestMethod.GET)
-	public String viewRegisterElement(Model model, Long accountId)
+	@RequestMapping(value = "/editAccount", method = RequestMethod.POST)
+	public String viewRegisterElement(Model model, @ModelAttribute("accountForm") AccountForm accountForm, BindingResult result)
 	{
-		Account account = accountDAO.findAccountByAccountId(accountId);
+		//Account account = accountDAO.findAccountByAccountId(accountId);
+		System.out.println(accountForm.getAccountId() + "\n" + accountForm.getFirstName() + "\n" + accountForm.getLastName());
 		
 		//AccountForm form = new AccountForm(account.getAccountId(), account.getFirstName(), account.getLastName());
 		//If the program tries to display a form that isn't a new AccountForm object, it returns a whitelabel error
 		//This is probably because the HTML page doesn't send an account ID when the Edit button is clicked, so the Java code is using an uninitialised Long to find an Account object
-
-		AccountForm form = new AccountForm(0L, "Matthew", "Moore");
 		
-		model.addAttribute("accountForm", form);
+		model.addAttribute("accountForm", accountForm);
 
 		return "editAccountPage";
 	}
@@ -118,7 +117,7 @@ public class MainController
 	}
 
 	//User clicks Submit on editAccountPage
-	@RequestMapping(value = "/editAccount", method = RequestMethod.POST)
+	@RequestMapping(value = "/editAccountSubmit", method = RequestMethod.POST)
 	public String editRegisterElement(Model model, @ModelAttribute("accountForm") @Validated AccountForm accountForm, BindingResult result, final RedirectAttributes redirectAttributes)
 	{
 		Account newAccount = null;

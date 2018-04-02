@@ -20,6 +20,7 @@
          }
       </style>
    </head>
+   
    <body>
       <!-- Include _main.html -->
       <th:block th:include="/_main"></th:block>
@@ -29,7 +30,7 @@
       <div th:if="${errorMessage != null}"
            th:utext="${errorMessage}" class="error">...</div>
        
-      <form th:action="@{/editAccount}" th:object="${accountForm}" method="POST">
+      <form th:action="@{/editAccountSubmit}" th:object="${accountForm}" method="POST">
          <table>
             <tr>
                <td>Account ID</td>
@@ -59,6 +60,5 @@
             </tr>
          </table>
       </form>
-       
    </body>
 </html>
