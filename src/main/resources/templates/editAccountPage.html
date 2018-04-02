@@ -34,8 +34,7 @@
          <table>
             <tr>
                <td>Account ID</td>
-               <td th:utext="*{accountId}" /></td>
-               <input type ="hidden" name="id" th:value="*{accountId}"></input>
+               <td><input type="text" th:field="*{accountId}" readonly /></input></td>
             </tr>
             <tr>
                <td>First Name</td>
