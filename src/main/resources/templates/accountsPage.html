@@ -3,37 +3,42 @@
    <head>
       <title th:utext="${title}"></title>
    </head>
-    
+   
    <style>
-      table th, table td {
+      table th, table td
+      {
          padding: 5px;
       }
-      .message {
+      .message
+      {
          color: blue;
       }
    </style>
     
    <body>
-    
       <!-- Include _main.html -->
       <th:block th:include="/_main"></th:block>  
        
       <h2>Accounts</h2>
-       
-    
-       
+      
       <table border="1">
             <tr>
                <th>Account ID</th>
                <th>First Name</th>
                <th>Last Name</th>
+               <th>Edit</th>
+               <th>Delete</th>
             </tr>
             <tr th:each ="account : ${accounts}">
-               <td th:utext="${account.accountId}">...</td>
-               <td th:utext="${account.firstName}">...</td>
-               <td th:utext="${account.lastName}">...</td>
+           	   <td th:utext="${account.accountId}" /></td>
+       		   <td th:utext="${account.firstName}" /></td>
+           	   <td th:utext="${account.lastName}" /></td>
+           	   <form th:action="@{/editAccount}" method="POST">
+           	   	  <input type="hidden" name="id" th:value="${account.accountId}"></input>
+           	   	  <td><input type="submit" value="Edit" /></td>
+       	   		  <td><input type="submit" value="Delete" th:formaction="@{/accounts}" /></td>
+               </form>
             </tr>
       </table>
-       
    </body>
 </html>

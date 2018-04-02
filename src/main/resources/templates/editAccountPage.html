@@ -25,23 +25,28 @@
       <!-- Include _main.html -->
       <th:block th:include="/_main"></th:block>
        
-      <h2>Create Account</h2>
+      <h2>Edit Account</h2>
        
       <div th:if="${errorMessage != null}"
            th:utext="${errorMessage}" class="error">...</div>
        
-      <form th:action="@{/createAccount}" th:object="${accountForm}" method="POST">
+      <form th:action="@{/editAccountSubmit}" th:object="${accountForm}" method="POST">
          <table>
             <tr>
+               <td>Account ID</td>
+               <td th:utext="*{accountId}" /></td>
+               <input type ="hidden" name="id" th:value="*{accountId}"></input>
+            </tr>
+            <tr>
                <td>First Name</td>
-               <td><input type="text" th:field="*{firstName}" /> </td>
+               <td><input type="text" th:field="*{firstName}" /></td>
                <td>
                   <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">..</span>
                </td>
             </tr>
             <tr>
                <td>Last Name</td>
-               <td><input type="text" th:field="*{lastName}" /> </td>
+               <td><input type="text" th:field="*{lastName}" /></td>
                <td>
                   <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">..</span>
                </td>
@@ -50,7 +55,7 @@
                <td>&nbsp;</td>
                <td>
                   <input type="submit" value="Submit" />
-                  <a th:href="@{/}">Cancel</a>
+                  <a th:href="@{/accounts}">Cancel</a>
                </td>
                <td>&nbsp;</td>
             </tr>
