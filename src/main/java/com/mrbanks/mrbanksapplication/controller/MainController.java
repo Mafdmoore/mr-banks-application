@@ -110,6 +110,8 @@ public class MainController
 	@RequestMapping(value = "/createAccount", method = RequestMethod.POST)
 	public String saveRegister(Model model, @ModelAttribute("accountForm") @Validated AccountForm accountForm, BindingResult result, final RedirectAttributes redirectAttributes)
 	{
+      	if(result.hasErrors()) return "createAccountPage";
+      
 		Account newAccount = null;
 		try
 		{
@@ -129,12 +131,14 @@ public class MainController
 
 	//User clicks Submit on editAccountPage
 	@RequestMapping(value = "/editAccountSubmit", method = RequestMethod.POST)
-	public String editRegisterElement(Model model, @ModelAttribute("accountForm") @Validated AccountForm accountForm, @RequestParam(name = "id") Long accountId, BindingResult result, final RedirectAttributes redirectAttributes)
+	public String editRegisterElement(Model model, @ModelAttribute("accountForm") @Validated AccountForm accountForm, BindingResult result, final RedirectAttributes redirectAttributes)
 	{
+		if(result.hasErrors()) return "editAccountPage";
+		
 		Account newAccount = null;
 		try
 		{
-			newAccount = accountDAO.editAccount(accountId, accountForm);
+			newAccount = accountDAO.editAccount(accountForm.getAccountId(), accountForm);
 		}
 		catch (Exception e)
 		{
