@@ -14,7 +14,7 @@ public class AccountDAO
 {
     @Autowired
     private static final Map<Long, Account> ACCOUNTS_MAP = new HashMap<>();
- 
+    
     static
     {
         initDATA();
